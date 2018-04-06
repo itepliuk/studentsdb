@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="utf-8">
+  <title>Сервіс Обліку Студентів</title>
+  <meta name="description" value="Система Обліку Студентів Навчального Закладу" />
+
+  <!--Include Styles -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="./css/main.css">
+
+</head>
+
+<body>
+
+  <!-- Start Container -->
+  <div class="container-fluid">
+
+    <!-- Start Header -->
+    <div class="col" id="header">
+      <h1>Форма редагування студента</h1>    
+    </div>
+
+    <!--End Header -->
+
+  <!--Forms to Edit -->
+  <form>
+    <div class="form-group row">
+      <label align="right" for="inputName" class="col-sm-2 col-form-label">Ім'я*</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="inputName" placeholder="Віталій">
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <label align="right" for="inputMidName" class="col-sm-2 col-form-label">По-батькові</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="inputMidName" placeholder="Віталій">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputSurName" class="col-sm-2 col-form-label">Прізвище*</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="inputSurName" placeholder="Віталій">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputTicketNumber" class="col-sm-2 col-form-label">№ Білету*</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" id="inputTicketNumber" placeholder="251">
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <label align="right" for="inputBirthDate" class="col-sm-2 col-form-label">Дата народження</label>
+      <div class="col-sm-2">
+        <input type="date" class="form-control" id="inputBirthDate" placeholder="251">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputPhoto" class="col-sm-2 col-form-label">Фото</label>
+      <input type="file" class="col-sm-2 form-control-file" id="inputPhoto" aria-describedby="fileHelp">
+      <small id="fileHelp" class="col-sm-2 form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputGroup" class="col-sm-2 col-form-label">Група*</label>
+      <select class="col-sm-2 custom-select" id="inputGroup">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputNotes" class="col-sm-2 col-form-label">Додаткові нотатки</label>
+      <textarea class="col-sm-2 form-control" id="inputNotes" rows="3"></textarea>
+    </div>
+    
+  </form>
+
+    
+  <!--End Forms to Edit -->
+    
+    <!--Start Footer -->
+    <div class="row" id="footer">
+      <div class="col-sm-6" align="center">
+
+        <a class="btn btn-primary col-sm-2" href="#" role="button">Зберегти</a>
+        <a class="btn btn-link col-sm-2" href="#" role="button">Скасувати</a>
+      </div>
+    </div>
+    <!--End Footer -->
+  </div>
+  <!--End Container-->
+
+
+  <!--Javascripts Section -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>
