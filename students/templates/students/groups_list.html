@@ -1,0 +1,90 @@
+{% extends 'students/base.html' %}
+{% load static %}
+{% block meta_title %}Групи{% endblock %}
+{% block title %}Групи{% endblock %}
+
+{% block content %}
+
+<!-- Add Student Button -->
+<a class="btn btn-primary" href="#" role="button">Додати Групу</a>
+
+{{ PORTAL_URL }}
+
+<!--Start Students Listing -->
+<table class="table table-hover table-striped">
+	<thead>
+		<tr>
+			<th>№</th>
+			<th>Назва</th>
+			<th>Староста</th>
+			<th>Дії</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1</td>
+			<td>МтМ-21</td>
+			<td>Ячменев Олег</td>
+			<td>
+				<div class="dropdown">
+				 	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Дія
+					</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#">Відвідування</a>
+				    <a class="dropdown-item" href="#">Редагувати</a>
+				    <a class="dropdown-item" href="#">Видалити</a>
+				</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>МтМ-22</td>
+			<td>Віталій Подоба</td>
+			<td>
+				<div class="dropdown">
+				 	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Дія
+					</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#">Відвідування</a>
+				    <a class="dropdown-item" href="#">Редагувати</a>
+				    <a class="dropdown-item" href="#">Видалити</a>
+				</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>МтМ-23</td>
+			<td>Іванов Андрій</td>
+			<td>
+				<div class="dropdown">
+				 	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Дія
+					</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#">Відвідування</a>
+				    <a class="dropdown-item" href="#">Редагувати</a>
+				    <a class="dropdown-item" href="#">Видалити</a>
+				</div>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<nav aria-label="...">
+	<ul class="pagination">				    	
+    	<li class="page-item disabled">
+    		<a class="page-link" href="#">1</a></li>
+    	<li class="page-item">
+      		<a class="page-link" href="#">2 </a>
+    	</li>
+    	<li class="page-item">
+    		<a class="page-link" href="#">Далі</a>
+    	</li>
+  	</ul>
+</nav>
+
+{% endblock %}

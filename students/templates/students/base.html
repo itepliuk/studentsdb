@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+	<meta charset="utf-8">
+	<title>Сервіс Обліку Студентів - {% block meta_title %}{% endblock %}</title>
+	<meta name="description" value="Система Обліку Студентів Навчального Закладу" />
+
+	<!--Include Styles -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{{ PORTAL_URL }}{% static 'css/main.css' %}">
+	{% block extra_css %}{% endblock %}
+
+</head>
+
+<body>
+
+	<!-- Start Container -->
+	<div class="container-fluid">
+
+		<!-- Start Header -->
+		<div class="row" id="header">
+
+			<!--Logo -->
+			<div class="col-8">
+				<h1>Сервіс Обліку Студентів</h1>
+			</div>
+
+			<!--Groups Selecor -->
+			<div class="col-4" id="group-selector">
+				<strong>Група:</strong>
+				<select>
+					<option value="""">Усі Студенти</option>
+					<option value="""">МтМ - 21, Подоба Віталій (№ 254)</option>
+					<option value="""">МтМ - 22, Корост Андрій (№ 2123)</option>
+				</select>
+			</div>
+		</div>
+		<!--End Header -->
+{% url 'home' as home %}
+		<!--Start SubHeader -->
+		<div class="row" id="sub-header">
+			<div class="col">
+				<ul class="nav nav-tabs">
+  					<li class="nav-item">
+    					<a class="nav-link {% if request.path == home %}active{% endif %}"  href="{% url 'home' %}">Студенти</a>
+  					</li>
+  					<li class="nav-item">
+   						<a class="nav-link {% if request.path == '/journal' %}active{% endif %}" href="/journal">Відвідування</a>
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link {% if request.path == '/groups/' %}active{% endif %}" href="{% url 'groups' %}">Групи</a>
+  					</li>  					
+				</ul>			
+			</div>
+		</div>
+		<!--End SubHeader -->
+
+		<!--Start Content Columns -->
+		<div class="row" id="content-columns">
+
+			<div class="col" id="content-column">
+
+				<!-- Status Message -->
+				{% comment 'Not used alert so far' %}
+				<div class="alert alert-warning" role="alert">Зміни скасовано.</div>
+				{% endcomment %}
+
+				<h2>{% block title %}{% endblock %}</h2>
+				
+				{% block content %}{% endblock %}
+
+			</div>
+		</div>
+		<!--End Content Columns -->
+		
+		<!--Start Footer -->
+		<div class="row" id="footer">
+
+			<div class="col">
+				&copy; 2018 Сервіс Обліку Студентів
+			</div>
+		</div>
+		<!--End Footer -->
+	</div>
+	<!--End Container-->
+
+
+	<!--Javascripts Section -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	{% block extra_js %}{% endblock %}
+</body>
+
+</html>
