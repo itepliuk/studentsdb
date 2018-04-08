@@ -4,7 +4,26 @@ from django.http import HttpResponse
 # Views for Students
 
 def students_list(request):
-	return render(request, 'students/students_list.html', {})
+	students = (
+		{'id': 1,
+		'first_name': 'Віталій',
+		'last_name':'Подоба',
+		'ticket': 235,
+		'image': 'img/f1.jpg'
+		},
+		{'id': 2,
+		'first_name': 'Андрій',
+		'last_name':'Корост',
+		'ticket': 2354,
+		'image': 'img/f2.jpg'
+		},
+		{'id': 3,
+		'first_name': 'Нонстоп',
+		'last_name':'Енерджі',
+		'ticket': 34,
+		'image': 'img/f3.jpg'
+		})
+	return render(request, 'students/students_list.html', {'students': students})
 
 def students_add(request):
 	return HttpResponse('<h1>Student Add Form</h1>')
@@ -28,3 +47,4 @@ def groups_edit(request, gid):
 
 def groups_delete(request, gid):
 	return HttpResponse('<h1>Delete Group %s</h1>'% gid)
+
