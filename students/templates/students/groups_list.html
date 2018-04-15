@@ -23,7 +23,7 @@
 	<tbody>
 		<tr>
 			<td>1</td>
-			<td>МтМ-21</td>
+			<td><a href="{% url 'groups_edit' group.id %}">МтМ-21</a></td>
 			<td>Ячменев Олег</td>
 			<td>
 				<div class="dropdown">
@@ -31,9 +31,9 @@
 				    Дія
 					</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="#">Відвідування</a>
-				    <a class="dropdown-item" href="#">Редагувати</a>
-				    <a class="dropdown-item" href="#">Видалити</a>
+					<a class="dropdown-item" href="/journal/{{ group.id}}">Відвідування</a>
+				    <a class="dropdown-item" href="{% url 'groups_edit' group.id %}">Редагувати</a>
+				    <a class="dropdown-item" href="{% url 'groups_delete' group.id %}">Видалити</a>
 				</div>
 				</div>
 			</td>
