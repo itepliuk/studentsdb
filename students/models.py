@@ -3,7 +3,13 @@ from django.db import models
 # Create your models here.
 class Student(models.Model):
     """Student model"""
-    
+    male = 'male'
+    female = 'female'
+    CHOICES = (
+        (male, 'Чоловіча'),
+        (female, 'Жіноча')
+        )
+
     class Meta():
         verbose_name = 'Студент'
         verbose_name_plural = 'Студенти'
@@ -48,6 +54,14 @@ class Student(models.Model):
     notes = models.TextField(
         "Додаткові нотатки",
         blank=True
+        )
+
+    gender = models.CharField(
+        "Стать",
+        max_length=25,
+        blank=False,
+        choices=CHOICES,
+        default=male
         )
 
     def __str__(self):
