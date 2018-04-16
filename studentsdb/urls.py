@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from students.views import students, groups, journal
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -32,3 +35,7 @@ urlpatterns = [
     url(r'^groups/(?P<gid>\d+)/edit/$', groups.groups_edit, name='groups_edit'),
     url(r'^groups/(?P<gid>\d+)/delete/$', groups.groups_delete, name='groups_delete'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
