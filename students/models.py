@@ -13,6 +13,7 @@ class Student(models.Model):
     class Meta():
         verbose_name = 'Студент'
         verbose_name_plural = 'Студенти'
+        ordering = ['last_name']
 
     first_name = models.CharField(
         "Ім'я",
