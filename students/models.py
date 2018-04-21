@@ -65,5 +65,44 @@ class Student(models.Model):
         default=male
         )
 
+    student_group = models.ForeignKey('Group',
+        verbose_name='Група',
+        blank=False,
+        null=True,
+        on_delete=models.PROTECT
+        )
+    
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
+
+
+class Group(models.Model):
+    """Group Model"""
+    class Meta():
+        verbose_name = 'Група'
+        verbose_name_plural = 'Групи'
+
+    title = models.CharField(
+        'Назва',
+        max_length=256,
+        blank=False,
+        )
+
+    leader = models.OneToOneField('Student',
+        verbose_name='Староста',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+        )
+
+    notes = models.TextField(
+        'Додаткові нотатки',
+        blank=True,
+        )
+
+    def __str__(self):
+        if self.leader:
+            return '{} ({} {})'.format(
+                self.title, self.leader.first_name, self.leader.last_name)
+        else:
+            return '{}'.format(self.title)
