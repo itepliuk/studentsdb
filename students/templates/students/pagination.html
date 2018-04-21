@@ -1,4 +1,24 @@
+{% if students.has_other_pages %}
+{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
 <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="{% url 'home' %}?page=1&order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo; </a>
+    </li>
+    {% for p in students.paginator.page_range %}
+    <li {% if students.number == p %}class="page-item active"{% endif %}>
+      <a class="page-link" href="{% url 'home' %}?page={{p}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{p}}</a>
+    </li>
+    {% endfor %}
+    <li class="page-item">
+      <a class="page-link" href="{% url 'home' %}?page={{ students.paginator.num_pages}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a>
+    </li>
+</nav>
+{% endwith %}
+{% endif %}
+
+
+
+<!-- <nav aria-label="...">
 	<ul class="pagination">
     	<li class="page-item disabled">
       		<a class="page-link" href="#" tabindex="-1">&laquo;</a>
@@ -12,4 +32,5 @@
       		<a class="page-link" href="#">&raquo;</a>
     	</li>
   	</ul>
-</nav>
+</nav> -->
+

@@ -48,7 +48,7 @@
 	<tbody>
 		{% for student in students %}
 		<tr>
-			<td>{{ forloop.counter }}</td>
+			<td>{{ forloop.counter0|add:students.start_index }}</td>
 			<td>
 				{% if student.photo %}
 				<img class="rounded-circle" height="30" width="30" src="{{ student.photo.url }}">
