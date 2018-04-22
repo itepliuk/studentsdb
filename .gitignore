@@ -3,3 +3,5 @@
 *.egg-info
 *.mo
 *.egg
+db.py
+demo_data.json

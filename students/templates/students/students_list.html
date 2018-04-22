@@ -78,6 +78,18 @@
 		{% endfor %}
 	</tbody>
 </table>
+<!--If there are no students in database - notification -->
+{% for student in students %}
+{% empty %}Студенти поки не внесені в базу даних
+<br>
+<br>
+{% endfor %}
+<!--Another way to show notification if empty students -->
+{% comment %}
+{% if students|length == 0 %}Студенти поки не внесені в базу даних <br>{% endif %}
+{% endcomment %}
+
+
 {% include "students/pagination.html" %}
 
 {% endblock %}
