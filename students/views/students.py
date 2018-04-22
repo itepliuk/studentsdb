@@ -7,6 +7,7 @@ from ..models import Student
 
 def students_list(request):
 	students = Student.objects.all()
+	
 	# try to order student list
 	order_by = request.GET.get('order_by', '')
 	if order_by in ('id','last_name', 'first_name', 'ticket'):
@@ -25,7 +26,6 @@ def students_list(request):
 	except EmptyPage:
 		#If page is out of range (e.g. 9999), deliver last page of results
 		students = paginator.page(paginator.num_pages)
-
 
 	return render(request, 'students/students_list.html', {'students': students})
 
