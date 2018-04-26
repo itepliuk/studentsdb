@@ -101,6 +101,7 @@ class Group(models.Model):
         blank=True,
         )
 
+
     def __str__(self):
         if self.leader:
             return '{} ({} {})'.format(
@@ -121,6 +122,13 @@ class Exam(models.Model):
         blank=False,
         )
 
+    teacher = models.CharField(
+        'Викладач',
+        max_length=256,
+        blank=False,
+        )
+
+
     exam_date = models.DateTimeField(
         "Дата іспиту",
         blank=False,
@@ -132,3 +140,18 @@ class Exam(models.Model):
         max_length=256,
         blank=True,
         )
+
+    exam_group = models.ForeignKey('Group',
+        verbose_name='Група',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+        )
+
+    def __str__(self):
+        if self.exam_group:
+            return '{} {} {}'.format(
+                self.title, self.teacher, self.exam_group.title)
+        else:
+            return '{} {}'.format(self.title, self.teacher)
+ 
