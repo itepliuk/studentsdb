@@ -107,3 +107,28 @@ class Group(models.Model):
                 self.title, self.leader.first_name, self.leader.last_name)
         else:
             return '{}'.format(self.title)
+
+class Exam(models.Model):
+    
+    class Meta():
+        verbose_name = 'Екзамен'
+        verbose_name_plural = 'Екзамени'
+        ordering = ['exam_date']
+
+    title = models.CharField(
+        'Назва',
+        max_length=256,
+        blank=False,
+        )
+
+    exam_date = models.DateTimeField(
+        "Дата іспиту",
+        blank=False,
+        null=True
+        )
+
+    duration = models.CharField(
+        'Тривалість',
+        max_length=256,
+        blank=True,
+        )

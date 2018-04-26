@@ -1,0 +1,50 @@
+{% extends 'students/base.html' %}
+{% load static %}
+{% block meta_title %}Іспити{% endblock %}
+{% block title %}Іспити{% endblock %}
+
+{% block content %}
+
+<!-- Add Exam Button -->
+<a class="btn btn-primary" href="{% url 'exams_add' %}" role="button">Додати Іспит</a>
+
+<!--Start Grups Listing -->
+<table class="table table-hover table-striped">
+	{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+	<thead>
+		<tr>
+			<th><a href="{% url 'exams' %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">№
+			{% if order_by == 'id' and reverse != '1' %}&uarr;
+			{% elif order_by == 'id' and reverse == '1' %}&darr;
+			{% endif %}
+			</a></th>
+			<th><a href="{% url 'exams' %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">Назва іспиту
+			{% if order_by == 'title' and reverse != '1' %}&uarr;
+			{% elif order_by == 'title' and reverse == '1' %}&darr;
+			{% endif %}
+			</a></th>
+			<th>Список груп</th>
+			<th><a href="{% url 'exams' %}?order_by=exam_date{% if order_by == 'exam_date' and reverse != '1' %}&amp;reverse=1{% endif %}">Дата та час
+			{% if order_by != 'id' and order_by != 'title' and reverse != '1' %}&uarr;
+			{% elif order_by == 'exam_date' and reverse != '1' %}&uarr;
+			{% elif order_by == 'exam_date' and reverse == '1' %}&darr;
+			{% endif %}
+			</a></th>
+			<th>Тривалість,хв.</th>
+		</tr>
+	</thead>
+	{% endwith %}
+	<tbody>
+		{% for exam in exams %}
+		<tr>
+			<td>{{ forloop.counter0 }}</td>
+			<td>{{ exam.title }}</td>
+			<td>DM82-DK81</td>
+			<td>{{ exam.exam_date }}</td>
+			<td>{{ exam.duration }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
+

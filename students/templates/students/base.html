@@ -52,7 +52,10 @@
   					</li>
   					<li class="nav-item">
     					<a class="nav-link {% if request.path == '/groups/' %}active{% endif %}" href="{% url 'groups' %}">Групи</a>
-  					</li>  					
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link {% if request.path == '/exams/' %}active{% endif %}" href="{% url 'exams' %}">Іспити</a>
+  					</li>  		  					
 				</ul>			
 			</div>
 		</div>
