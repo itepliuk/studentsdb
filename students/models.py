@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator
 
 # Create your models here.
 class Student(models.Model):
@@ -154,4 +155,60 @@ class Exam(models.Model):
                 self.title, self.teacher, self.exam_group.title)
         else:
             return '{} {}'.format(self.title, self.teacher)
- 
+
+class Rating(models.Model):
+    """docstring for Rating"""
+
+    student = models.ForeignKey('Student',
+        verbose_name='Студент',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+        )
+
+    exam_rating = models.ForeignKey('Exam',
+        verbose_name='Екзамен',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+        )
+
+    mark = models.PositiveIntegerField(
+        'Оцінка', 
+        default=0,
+        validators=[MaxValueValidator(100, 'Оцінка не може бути більше 100 балів')]
+        )
+
+    notes = models.TextField(
+        'Додаткові нотатки',
+        blank=True,
+        )
+
+    class Meta():
+        verbose_name = 'Оцінка'
+        verbose_name_plural = 'Оцінки'
+        
+    def __str__(self):
+        return '{} {}'.format(self.student, self.mark)
+
+    def ects(self):
+        if self.mark >= 90 and self.mark <=100:
+            return 'A'
+        elif self.mark >= 80 and self.mark <90:
+            return 'B'
+        elif self.mark >= 65 and self.mark <80:
+            return 'C'
+        elif self.mark >= 55 and self.mark <65:
+            return 'D'
+        elif self.mark >= 50 and self.mark <55:
+            return 'E'
+        elif self.mark >= 1 and self.mark <50:
+            return 'F'
+        else:
+            return 'Оцінка ще не виставлена'
+
+    def passfail(self):
+        if self.mark >= 50:
+            return True
+        else:
+            return False

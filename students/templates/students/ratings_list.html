@@ -1,0 +1,47 @@
+{% extends 'students/base.html' %}
+{% load static %}
+{% block meta_title %}Оцінки{% endblock %}
+{% block title %}Оцінки{% endblock %}
+
+{% block content %}
+
+<!-- Add Exam Button -->
+<a class="btn btn-primary" href="{% url 'exams_add' %}" role="button">Додати NONE</a>
+
+<!--Start Grups Listing -->
+<table class="table table-hover table-striped">
+	{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+	<thead>
+		<tr>
+			<th><a href="{% url 'ratings' %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">№
+			{% if order_by == 'id' and reverse != '1' %}&uarr;
+			{% elif order_by == 'id' and reverse == '1' %}&darr;
+			{% endif %}
+			</a></th>
+			<th><a href="{% url 'ratings' %}?order_by=student{% if order_by == 'student' and reverse != '1' %}&amp;reverse=1{% endif %}">Студент
+			{% if order_by == 'student' and reverse != '1' %}&uarr;
+			{% elif order_by == 'student' and reverse == '1' %}&darr;
+			{% endif %}
+			</a></th>
+			<th>Іспит</th>
+			<th>Викладач</th>
+			<th>Оцінка ECTS</th>
+			<th>Оцінка 100</th>
+		</tr>
+	</thead>
+	{% endwith %}
+	<tbody>
+		{% for rating in ratings %}
+		<tr>
+			<td>{{ forloop.counter0 }}</td>
+			<td>{{ rating.student }}</td>
+			<td>{{ rating.exam_rating.title }}</td>
+			<td>{{ rating.exam_rating.teacher }}</td>
+			<td>{{ rating.ects }}</td>
+			<td>{{ rating.mark }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
+

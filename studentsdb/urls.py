@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from students.views import students, groups, journal, exams
+from students.views import students, groups, journal, exams, ratings
 
 
 urlpatterns = [
@@ -38,6 +38,10 @@ urlpatterns = [
     #Exams urls
     url(r'^exams/$', exams.exams_list, name='exams'),
     url(r'^exams/add/$', exams.exams_add, name='exams_add'),
+
+     #Ratings urls
+    url(r'^ratings/$', ratings.ratings_list, name='ratings'),
+    
 ]
 
 
