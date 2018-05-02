@@ -4,6 +4,72 @@
 {% block title %}Додати Студента{% endblock %}
 
 {% block content %}
+<form action="{% url 'students_add' %}" method="post"
+    enctype="multipart/form-data">
+{% csrf_token %}
 
-We will see a student add form here as soon as posible
+    <div class="form-group row">
+      <label align="right" for="inputName" class="col-sm-2 col-form-label">Ім'я*</label>
+      <div class="col-sm-2">
+        <input name="first_name" type="text" class="form-control" id="inputName" placeholder="Віталій">
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <label align="right" for="inputMidName" class="col-sm-2 col-form-label">По-батькові</label>
+      <div class="col-sm-2">
+        <input name="middle_name" type="text" class="form-control" id="inputMidName" placeholder="Віталій">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputSurName" class="col-sm-2 col-form-label">Прізвище*</label>
+      <div class="col-sm-2">
+        <input name="last_name" type="text" class="form-control" id="inputSurName" placeholder="Віталій">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputTicketNumber" class="col-sm-2 col-form-label">№ Білету*</label>
+      <div class="col-sm-2">
+        <input name="ticket" type="number" class="form-control" id="inputTicketNumber" placeholder="251">
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <label align="right" for="inputBirthDate" class="col-sm-2 col-form-label">Дата народження</label>
+      <div class="col-sm-2">
+        <input name="birthday" type="text" class="form-control" id="inputBirthDate" placeholder="2018-03-22">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputPhoto" class="col-sm-2 col-form-label">Фото</label>
+      <input name="photo" type="file" class="col-sm-2 form-control-file" id="inputPhoto" aria-describedby="fileHelp">
+      <small id="fileHelp" class="col-sm-2 form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputGroup" class="col-sm-2 col-form-label">Група*</label>
+      <select name="student_group" class="col-sm-2 custom-select" id="inputGroup">
+            <option value="">Виберіть групу</option>
+            {% for group in groups %}
+            <option value="{{ group.id }}">{{group.title}}</option>
+            {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group row">
+      <label align="right" for="inputNotes" class="col-sm-2 col-form-label">Додаткові нотатки</label>
+      <textarea class="col-sm-2 form-control" id="inputNotes" rows="3"></textarea>
+    </div>
+    
+    <div class="row" id="footer">
+      <div class="col-sm-6" align="center">
+        <input type="submit" name="add_button" value="Зберегти" class="btn btn-primary col-sm-2">
+        <button class="btn btn-link col-sm-2" name="cancel_button">Скасувати</button>
+      </div>
+    </div>
+
+  </form>
 {% endblock %}

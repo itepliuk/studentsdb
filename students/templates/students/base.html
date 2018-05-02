@@ -32,9 +32,10 @@
 			<div class="col-4" id="group-selector">
 				<strong>Група:</strong>
 				<select>
-					<option value="""">Усі Студенти</option>
-					<option value="""">МтМ - 21, Подоба Віталій (№ 254)</option>
-					<option value="""">МтМ - 22, Корост Андрій (№ 2123)</option>
+					<option value="">Виберіть групу</option>
+					{% for group in groups %}
+					<option value="{{ group.id }}">{{group.title}}</option>
+					{% endfor %}
 				</select>
 			</div>
 		</div>
