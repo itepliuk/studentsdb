@@ -4,4 +4,4 @@
 *.mo
 *.egg
 db.py
-demo_data.json
+*.json
