@@ -23,10 +23,14 @@
 			{% elif order_by == 'student' and reverse == '1' %}&darr;
 			{% endif %}
 			</a></th>
-			<th>Іспит</th>
-			<th>Викладач</th>
-			<th>Оцінка ECTS</th>
-			<th>Оцінка 100</th>
+			<th><a href="{% url 'ratings' %}?order_by=exam_rating{% if order_by == 'exam_rating' and reverse != '1' %}&amp;reverse=1{% endif %}">Іспит
+			</a></th>
+			<th><a href="{% url 'ratings' %}?order_by=teacher{% if order_by == 'teacher' and reverse != '1' %}&amp;reverse=1{% endif %}">Викладач
+			</a></th>
+			<th><a href="{% url 'ratings' %}?order_by=mark{% if order_by == 'mark' and reverse != '1' %}&amp;reverse=1{% endif %}">Оцінка ECTS
+			</a></th>
+			<th><a href="{% url 'ratings' %}?order_by=mark{% if order_by == 'mark' and reverse != '1' %}&amp;reverse=1{% endif %}">Оцінка 100
+			</a></th>
 		</tr>
 	</thead>
 	{% endwith %}

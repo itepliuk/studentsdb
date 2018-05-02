@@ -190,7 +190,7 @@ class Rating(models.Model):
         
     def __str__(self):
         return '{} {}'.format(self.student, self.mark)
-
+    
     def ects(self):
         if self.mark >= 90 and self.mark <=100:
             return 'A'
