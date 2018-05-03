@@ -11,21 +11,23 @@
     <div class="form-group row">
       <label align="right" for="inputName" class="col-sm-2 col-form-label">Ім'я*</label>
       <div class="col-sm-2">
-        <input name="first_name" type="text" class="form-control" id="inputName" placeholder="Віталій">
+        <input name="first_name" type="text" value="{{ request.POST.first_name }}" class="form-control" id="inputName" placeholder="Віталій">
+        <span class="help-block">{{ errors.first_name }}</span>
       </div>
     </div>
     
     <div class="form-group row">
       <label align="right" for="inputMidName" class="col-sm-2 col-form-label">По-батькові</label>
       <div class="col-sm-2">
-        <input name="middle_name" type="text" class="form-control" id="inputMidName" placeholder="Віталій">
+        <input name="middle_name" type="text"  value="{{ request.POST.middle_name }}" class="form-control" id="inputMidName" placeholder="Генадійович">
       </div>
     </div>
 
     <div class="form-group row">
       <label align="right" for="inputSurName" class="col-sm-2 col-form-label">Прізвище*</label>
       <div class="col-sm-2">
-        <input name="last_name" type="text" class="form-control" id="inputSurName" placeholder="Віталій">
+        <input name="last_name" type="text" class="form-control" id="inputSurName" placeholder="Подоба">
+        <span class="help-block">{{ errors.last_name }}</span>
       </div>
     </div>
 
@@ -33,13 +35,15 @@
       <label align="right" for="inputTicketNumber" class="col-sm-2 col-form-label">№ Білету*</label>
       <div class="col-sm-2">
         <input name="ticket" type="number" class="form-control" id="inputTicketNumber" placeholder="251">
+        <span class="help-block">{{ errors.ticket }}</span>
       </div>
     </div>
     
     <div class="form-group row">
-      <label align="right" for="inputBirthDate" class="col-sm-2 col-form-label">Дата народження</label>
+      <label align="right" for="inputBirthDate" class="col-sm-2 col-form-label">Дата народження*</label>
       <div class="col-sm-2">
         <input name="birthday" type="text" class="form-control" id="inputBirthDate" placeholder="2018-03-22">
+        <span class="help-block">{{ errors.birthday }}</span>
       </div>
     </div>
 
@@ -54,9 +58,10 @@
       <select name="student_group" class="col-sm-2 custom-select" id="inputGroup">
             <option value="">Виберіть групу</option>
             {% for group in groups %}
-            <option value="{{ group.id }}">{{group.title}}</option>
+            <option value="{{ group.id }}" {% if group.id == request.POST.student_group|add:0 %} selected='1'{% endif %}>{{group.title}}</option>
             {% endfor %}
       </select>
+      <span class="help-block">{{ errors.student_group }}</span>
     </div>
 
     <div class="form-group row">
