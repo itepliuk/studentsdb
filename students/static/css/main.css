@@ -28,3 +28,10 @@ h1, h2, h3, h4, h5, h6 {
 #content-column {
 	margin-top: 30px; 
 }
+
+/* Form Styles */
+textarea,
+select,
+input {
+	max-width: 300px;	
+}

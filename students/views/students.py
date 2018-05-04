@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 from ..models import Student, Group
 
 # Views for Students
@@ -92,7 +93,10 @@ def students_add(request):
                 #create student object from data {}
                 student = Student(**data)
                 # save it to database
-                student.save()
+                student.save() 
+
+                # alert message django
+                messages.success(request, 'Студента {} {} успішно додано!'.format(last_name, first_name))
 
                 # redirect user to students list
                 return HttpResponseRedirect(reverse('home'))
@@ -104,7 +108,8 @@ def students_add(request):
                     'errors': errors })
         elif request.POST.get('cancel_button') is not None:
             # redirect to homepage on cancel button
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(
+                '{}?status_message=Додавання студента скасовано!'.format(reverse('home')))
     else:
         #initial form render
         return render(request, 'students/students_add.html',

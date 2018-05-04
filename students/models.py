@@ -55,7 +55,8 @@ class Student(models.Model):
 
     notes = models.TextField(
         "Додаткові нотатки",
-        blank=True
+        blank=True, 
+        null=True,
         )
 
     gender = models.CharField(

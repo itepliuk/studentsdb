@@ -59,7 +59,10 @@
   					</li>
   					<li class="nav-item">
     					<a class="nav-link {% if request.path == '/ratings/' %}active{% endif %}" href="{% url 'ratings' %}">Оцінки</a>
-  					</li>   		  					
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link {% if request.path == '/contact-admin/' %}active{% endif %}" href="{% url 'contact_admin' %}">Контакт</a>
+  					</li>    		  					
 				</ul>			
 			</div>
 		</div>
@@ -71,9 +74,19 @@
 			<div class="col" id="content-column">
 
 				<!-- Status Message -->
-				{% comment 'Not used alert so far' %}
-				<div class="alert alert-warning" role="alert">Зміни скасовано.</div>
-				{% endcomment %}
+				{% block status_message %}
+				{% if request.GET.status_message %}
+				<div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
+				{% endif %}
+
+				{% if messages %}				
+    			{% for message in messages %}
+    			<div class="alert alert-warning" role="alert">{{ message }}</div>   
+   				{% endfor %}
+   				{% endif %}
+
+				{% endblock %}
+				
 
 				<h2>{% block title %}{% endblock %}</h2>
 				

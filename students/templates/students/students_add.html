@@ -3,12 +3,18 @@
 {% block meta_title %}Додати Студента{% endblock %}
 {% block title %}Додати Студента{% endblock %}
 
+{% block status_message %}
+{% if errors %}
+<div class="alert alert-danger" role="alert">Будь-ласка, виправте наступні помилки!</div>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <form action="{% url 'students_add' %}" method="post"
     enctype="multipart/form-data">
 {% csrf_token %}
 
-    <div class="form-group row">
+    <div class="form-group row {% if errors.first_name %}has-error{% endif %}">
       <label align="right" for="inputName" class="col-sm-2 col-form-label">Ім'я*</label>
       <div class="col-sm-2">
         <input name="first_name" type="text" value="{{ request.POST.first_name }}" class="form-control" id="inputName" placeholder="Віталій">
@@ -16,14 +22,14 @@
       </div>
     </div>
     
-    <div class="form-group row">
+    <div class="form-group row {% if errors.middle_name %}has-error{% endif %}">
       <label align="right" for="inputMidName" class="col-sm-2 col-form-label">По-батькові</label>
       <div class="col-sm-2">
         <input name="middle_name" type="text"  value="{{ request.POST.middle_name }}" class="form-control" id="inputMidName" placeholder="Генадійович">
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row {% if errors.last_name %}has-error{% endif %}">
       <label align="right" for="inputSurName" class="col-sm-2 col-form-label">Прізвище*</label>
       <div class="col-sm-2">
         <input name="last_name" type="text" class="form-control" id="inputSurName" placeholder="Подоба">
@@ -31,7 +37,7 @@
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row {% if errors.ticket %}has-error{% endif %}">
       <label align="right" for="inputTicketNumber" class="col-sm-2 col-form-label">№ Білету*</label>
       <div class="col-sm-2">
         <input name="ticket" type="number" class="form-control" id="inputTicketNumber" placeholder="251">
@@ -39,7 +45,7 @@
       </div>
     </div>
     
-    <div class="form-group row">
+    <div class="form-group row {% if errors.birhtday %}has-error{% endif %}">
       <label align="right" for="inputBirthDate" class="col-sm-2 col-form-label">Дата народження*</label>
       <div class="col-sm-2">
         <input name="birthday" type="text" class="form-control" id="inputBirthDate" placeholder="2018-03-22">
@@ -47,13 +53,13 @@
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row {% if errors.photo %}has-error{% endif %}">
       <label align="right" for="inputPhoto" class="col-sm-2 col-form-label">Фото</label>
       <input name="photo" type="file" class="col-sm-2 form-control-file" id="inputPhoto" aria-describedby="fileHelp">
       <small id="fileHelp" class="col-sm-2 form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row {% if errors.student_group %}has-error{% endif %}">
       <label align="right" for="inputGroup" class="col-sm-2 col-form-label">Група*</label>
       <select name="student_group" class="col-sm-2 custom-select" id="inputGroup">
             <option value="">Виберіть групу</option>
@@ -64,7 +70,7 @@
       <span class="help-block">{{ errors.student_group }}</span>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row {% if errors.notes %}has-error{% endif %}">
       <label align="right" for="inputNotes" class="col-sm-2 col-form-label">Додаткові нотатки</label>
       <textarea class="col-sm-2 form-control" id="inputNotes" rows="3"></textarea>
     </div>
