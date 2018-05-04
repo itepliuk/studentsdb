@@ -137,3 +137,5 @@ try:
     from .db import *
 except Exception as e:
     print(e)
+
+ADMIN_EMAIL = 'olo@klo.ok'

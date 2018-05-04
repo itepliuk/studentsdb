@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from students.views import students, groups, journal, exams, ratings
+from students.views import students, groups, journal, exams, ratings, contact_admin
 
 
 urlpatterns = [
@@ -41,6 +41,9 @@ urlpatterns = [
 
      #Ratings urls
     url(r'^ratings/$', ratings.ratings_list, name='ratings'),
+
+    #Contact Admin Form
+    url(r'^contact-admin/$', contact_admin.contact_admin, name='contact_admin'),
     
 ]
 
