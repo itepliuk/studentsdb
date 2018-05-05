@@ -3,5 +3,5 @@
 *.egg-info
 *.mo
 *.egg
-db.py
+local_settings.py
 *.json

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'crispy_forms',
     
     'students',
 ]
@@ -133,9 +134,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 #Debug toolbar
 INTERNAL_IPS = '127.0.0.1'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 try:
-    from .db import *
+    from .local_settings import *
 except Exception as e:
     print(e)
-
-ADMIN_EMAIL = 'olo@klo.ok'
