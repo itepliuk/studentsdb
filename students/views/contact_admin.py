@@ -5,6 +5,7 @@ from django.contrib import messages
 from studentsdb.settings import ADMIN_EMAIL
 from ..forms import ContactForm
 
+
 def contact_admin(request):
 	#check if form was posted
 	if request.method == 'POST':
