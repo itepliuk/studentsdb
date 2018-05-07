@@ -28,8 +28,8 @@ urlpatterns = [
     #Students urls
     url(r'^$', students.students_list, name='home'),
     url(r'^students/add/$', students.students_add, name='students_add'),
-    url(r'^students/(?P<sid>\d+)/edit/$', students.students_edit, name='students_edit'),
-    url(r'^students/(?P<sid>\d+)/delete/$', students.students_delete, name='students_delete'),
+    url(r'^students/(?P<pk>\d+)/edit/$', students.StudentUpdateView.as_view(), name='students_edit'),
+    url(r'^students/(?P<pk>\d+)/delete/$', students.StudentDeleteView.as_view(), name='students_delete'),
 
     #Groups urls
     url(r'^groups/$', groups.groups_list, name='groups'),

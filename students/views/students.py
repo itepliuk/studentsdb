@@ -1,10 +1,14 @@
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import UpdateView, DeleteView
+
 from ..models import Student, Group
+from ..forms import StudentUpdateForm
 
 # Views for Students
 
@@ -115,8 +119,33 @@ def students_add(request):
         return render(request, 'students/students_add.html',
                     {'groups': Group.objects.all().order_by('title')})
 
-def students_edit(request, sid):
-    return HttpResponse('<h1>Edit Student %s</h1>' % sid)
 
-def students_delete(request, sid):
-    return HttpResponse('<h1>Delete Student %s</h1>' % sid)
+class StudentUpdateView(SuccessMessageMixin, UpdateView):
+    model = Student
+    template_name = 'students/students_edit.html'
+    form_class = StudentUpdateForm
+    success_url = '/'
+    success_message = 'Студента успішно збережено!'
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            self.success_message = 'Редагування студента відмінено!'
+            # import pdb; pdb.set_trace()
+            return redirect('home')
+        else:
+            return super().post(request, *args, **kwargs)
+
+
+class StudentDeleteView(SuccessMessageMixin, DeleteView):
+    model = Student
+    template_name = 'students/students_delete.html'
+    success_url = '/'
+    success_message = 'Студента успішно видалено!'
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            messages.success(request, 'Видалення студента відмінено!') 
+            # import pdb; pdb.set_trace()
+            return redirect('home')
+        else:
+            return super().post(request, *args, **kwargs)
