@@ -1,0 +1,22 @@
+{% extends 'students/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block meta_title %}{% if instance == None %}Додати групу{% else %}Редагувати групу{% endif %}{% endblock %}
+{% block title %}{% if instance == None %}Додати групу{% else %}Редагувати групу{% endif %}{% endblock %}
+
+
+{% block content %}
+
+<!-- <form action='{% url "contact_admin" %}' method='post'>
+  {% csrf_token %}
+
+  {{ form.as_p }}
+
+  <input type="submit" value="Надіслати" name="send_button">
+  
+</form>
+ -->
+{% crispy form %}
+
+{% endblock %}

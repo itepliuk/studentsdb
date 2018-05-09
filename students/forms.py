@@ -72,4 +72,29 @@ class StudentUpdateForm(forms.ModelForm):
 			Submit('cancel_button', 'Скасувати', css_class='btn btn-link'),
 			))
 
-			
+class GroupAddForm(forms.ModelForm):
+	class Meta:
+		model = Group
+		fields = '__all__'
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+
+		self.helper = FormHelper(self)
+
+		# set form tag attributes
+		self.helper.form_action = reverse('groups_add')
+		self.helper.form_method = 'post'
+		self.helper.form_class = 'form-horisontal'
+
+		# twitter bootstrap styles
+		self.helper.help_text_inline = True
+		self.helper.html5_required = True
+		self.helper.label_class = 'col-sm-2 col-form-label'
+		self.helper.field_class = 'col-sm-4'
+
+		# add buttons
+		self.helper.layout.append(FormActions(
+			Submit('add_button','Зберегти', css_class='btn btn-primary'),
+			Submit('cancel_button', 'Скасувати', css_class='btn btn-link', formnovalidate='formnovalidate'),
+			))
