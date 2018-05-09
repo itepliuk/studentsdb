@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView, DetailView
 
 from ..models import Student, Group
 from ..forms import StudentUpdateForm
@@ -31,8 +31,15 @@ def students_list(request):
         # If page is not an integer, deliver first page
         students = paginator.page(1)
     except EmptyPage:
-        #If page is out of range (e.g. 9999), deliver last page of results
+        # If page is out of range (e.g. 9999), deliver last page of results
         students = paginator.page(paginator.num_pages)
+    
+    # multiply deleting of students
+    if request.method == 'POST' and request.POST.get('delete_all'):
+        Student.objects.filter(id__in=request.POST.getlist('del')).delete()
+        messages.success(request, 'Обраних студентів було успішно видалено!')
+        return redirect('home')
+
 
     return render(request, 'students/students_list.html', {'students': students})
 
@@ -149,3 +156,9 @@ class StudentDeleteView(SuccessMessageMixin, DeleteView):
             return redirect('home')
         else:
             return super().post(request, *args, **kwargs)
+
+
+class StudentDetailView(DetailView):
+    model = Student
+    template_name = 'students/students_detail.html'
+    context_object_name = 'instance'

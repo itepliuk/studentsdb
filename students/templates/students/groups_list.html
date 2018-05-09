@@ -37,7 +37,7 @@
 	<tbody>
 		{% for group in groups %}
 		<tr>
-			<td>{{ forloop.counter0|add:groups.start_index }}</td>
+			<td><a href="{% url 'groups_detail' group.id %}">{{ forloop.counter0|add:groups.start_index }}</a></td>
 			<td><a href="{% url 'groups_edit' group.id %}">{{ group.title }}</a></td>
 			<td>
 			{% if group.leader %}

@@ -30,12 +30,15 @@ urlpatterns = [
     url(r'^students/add/$', students.students_add, name='students_add'),
     url(r'^students/(?P<pk>\d+)/edit/$', students.StudentUpdateView.as_view(), name='students_edit'),
     url(r'^students/(?P<pk>\d+)/delete/$', students.StudentDeleteView.as_view(), name='students_delete'),
+    url(r'^students/(?P<pk>\d+)/$', students.StudentDetailView.as_view(), name='students_detail'),
 
     #Groups urls
     url(r'^groups/$', groups.groups_list, name='groups'),
     url(r'^groups/add/$', groups.groups_add, name='groups_add'),
     url(r'^groups/(?P<pk>\d+)/edit/$', groups.groups_edit, name='groups_edit'),
     url(r'^groups/(?P<pk>\d+)/delete/$', groups.groups_delete, name='groups_delete'),
+    url(r'^groups/(?P<pk>\d+)/$', groups.groups_detail, name='groups_detail'),
+
 
     #Exams urls
     url(r'^exams/$', exams.exams_list, name='exams'),

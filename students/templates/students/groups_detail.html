@@ -1,0 +1,27 @@
+{% extends 'students/base.html' %}
+{% load static %}
+
+{% block meta_title %}Перегляд групи {{ instance.title }}{% endblock %}
+{% block title %}Перегляд групи {{ instance.title }}{% endblock %}
+
+
+{% block content %}
+<div class="col-6">
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<td>Назва:</td>
+			<td>{{ instance.title }}</td>
+		</tr>
+		<tr>
+			<td>Староста:</td>
+			<td>{{ instance.leader }}</td>
+		</tr>
+		<tr>
+			<td>Нотатки</td>
+			<td>{{ instance.notes }}</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+{% endblock %}

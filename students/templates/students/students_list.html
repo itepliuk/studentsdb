@@ -6,10 +6,21 @@
 {% block content %}
 
 <!-- Add Student Button -->
-<a class="btn btn-primary" href="{% url 'students_add' %}" role="button">Додати студента</a>
+
 
 
 <!--Start Students Listing -->
+<form action="" method="post">
+{% csrf_token %}
+<div class="row justify-content-between">
+    <div class="col-4">
+      <a class="btn btn-primary" href="{% url 'students_add' %}" role="button">Додати студента</a>
+    </div>
+    <div class="col-2">
+      <input type="submit" value="Видалити" name="delete_all" class="btn btn-outline-secondary ml-5">
+    </div>
+  </div>
+
 <table class="table table-hover table-striped">
 	{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
 	<thead>
@@ -41,6 +52,7 @@
 			{% endif %}
 			</a></th>
 			<th>Дії</th>
+			<th>&uarr;</th>
 		</tr>
 	</thead>
 	{% endwith %}
@@ -74,10 +86,13 @@
 				</div>
 				</div>
 			</td>
+			<td><input type="checkbox" name="del" value="{{ student.id }}"></td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
+
+</form>
 <!--If there are no students in database - notification -->
 {% for student in students %}
 {% empty %}Студенти поки не внесені в базу даних

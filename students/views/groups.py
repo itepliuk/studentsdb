@@ -32,6 +32,10 @@ def groups_list(request):
 
     return render(request, 'students/groups_list.html', {'groups': groups})
 
+def groups_detail(request, pk=None):
+    instance = get_object_or_404(Group, id=pk)
+    return render(request, 'students/groups_detail.html', {'instance': instance})
+
 def groups_add(request):
     form = GroupAddForm(request.POST or None)
     if request.method == 'POST':

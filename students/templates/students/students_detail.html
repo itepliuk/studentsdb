@@ -1,0 +1,53 @@
+{% extends 'students/base.html' %}
+{% load static %}
+
+{% block meta_title %}Перегляд студента {{ instance }}{% endblock %}
+{% block title %}Перегляд студента {{ instance }}{% endblock %}
+
+
+{% block content %}
+<div class="col-6">
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td>Ім'я:</td>
+            <td>{{ instance.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Прізвище:</td>
+            <td>{{ instance.last_name }}</td>
+        </tr>
+        <tr>
+            <td>По-батькові:</td>
+            <td>{{ instance.middle_name }}</td>
+        </tr>
+        <tr>
+            <td>Вік:</td>
+            <td>{{ instance.birthday|timesince }}</td>
+        </tr>
+        <tr>
+            <td>Фото:</td>
+            <td>
+                {% if instance.photo %}
+                <img class="rounded-circle" height="30" width="30" src="{{ instance.photo.url }}">
+                {% else %}
+                    {% if student.gender == student.male %}
+                    <img class="rounded-circle" height="30" width="30" src="{% static 'img/male.png' %}">
+                    {% elif student.gender == 'female' %}
+                    <img class="rounded-circle" height="30" width="30" src="{% static 'img/female.png' %}">
+                    {% endif %}
+                {% endif %}
+            </td>           
+        </tr>
+        <tr>
+            <td>Стать:</td>
+            <td>{{ instance.gender }}</td>
+        </tr>
+        <tr>
+            <td>Група:</td>
+            <td>{{ instance.student_group }}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+{% endblock %}
