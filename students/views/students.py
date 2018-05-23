@@ -1,3 +1,4 @@
+import imghdr
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -96,8 +97,14 @@ def students_add(request):
                     data['student_group'] = groups[0]
 
             photo = request.FILES.get('photo')
+            
             if photo:
-                data['photo'] = photo
+                if imghdr.what(photo) not in ('jpg', 'jpeg', 'png'):
+                    errors['photo'] = 'Фото повинно мати розширення: jpg, jpeg, png'
+                elif len(photo) > 5 * 1024 * 1024:
+                    errors['photo'] = 'Розмір фото не повинен перевищувати 5 Мб'
+                else:
+                    data['photo'] = photo
 
             # save student
             if not errors:

@@ -15,22 +15,26 @@ class StudentFormAdmin(ModelForm):
             raise ValidationError('Студент є старостою іншої групи', code='invalid')
         return self.cleaned_data['student_group']
 
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+        if photo is not None:
+            if len(photo) > 5 * 1024 * 1024:
+                raise ValidationError('Розмір зображення не може перевищувати 5 Мб')
+        return self.cleaned_data['photo']
 
 class StudentBaseFormSet(BaseModelFormSet):
     # TO DO FIX IF NONE SELECTED STUDENTS IN FORMSET
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for form in self.forms:
-            form.empty_permitted = False
-
     def clean(self):
+        if any(self.errors):
+            return
         #print(self.cleaned_data)
         for form in self.forms:
             student_group = form.cleaned_data.get('student_group')
             groups = Group.objects.filter(leader=form.instance)
             if len(groups) > 0 and student_group != None and \
                 student_group != groups[0]:
+                form.add_error('student_group', 'Студент є старостою іншої групи')
                 raise ValidationError('Студент є старостою іншої групи', code='invalid')
         return self.cleaned_data
         
@@ -64,23 +68,23 @@ class StudentAdmin(admin.ModelAdmin):
 class GroupFormAdmin(ModelForm):
 
     def clean_leader(self):
-        if self.cleaned_data['leader'].student_group != self.instance:
-            raise ValidationError('Вибраний староста не є студентом цієї групи', code='invalid')
+        if self.cleaned_data['leader'] is not None:
+            if self.cleaned_data['leader'].student_group != self.instance:
+                raise ValidationError('Вибраний староста не є студентом цієї групи', code='invalid')
         return self.cleaned_data['leader']
 
 class GroupBaseFormSet(BaseModelFormSet):
     # TO DO FIX IF NONE SELECTED GROUPS IN FORMSET
     def clean(self):
+        if any(self.errors):
+            return
         #print(self.cleaned_data)
         for form in self.forms:
-            print(form.cleaned_data)
-            try:
-                if form.cleaned_data['leader'] != None:
-                    if form.cleaned_data['leader'].student_group != form.instance:
-                        raise ValidationError('Вибраний староста не є студентом цієї групи', code='invalid')
-            except KeyError:
-                pass
-
+            if form.cleaned_data['leader'] is not None:
+                if form.cleaned_data['leader'].student_group != form.instance:
+                    form.add_error('leader', 'Цей староста не є студентом цієї групи')
+                    raise ValidationError(
+                        'Вибраний староста не є студентом цієї групи', code='invalid')
                 
         return self.cleaned_data           
         
