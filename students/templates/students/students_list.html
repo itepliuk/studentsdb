@@ -6,20 +6,25 @@
 {% block content %}
 
 <!-- Add Student Button -->
-
-
+<div class="row justify-content-center">
+	<form class="form-inline" method="get">
+		<input class="form-control mr-sm-2" type="search" name="search" placeholder="Пошук" aria-label="Пошук" value="{{ request.GET.search }}">
+		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button>
+	</form>
+</div>
 
 <!--Start Students Listing -->
 <form action="" method="post">
 {% csrf_token %}
-<div class="row justify-content-between">
+<div class="row">
     <div class="col-4">
       <a class="btn btn-primary" href="{% url 'students_add' %}" role="button">Додати студента</a>
     </div>
-    <div class="col-2">
-      <input type="submit" value="Видалити" name="delete_all" class="btn btn-outline-secondary ml-5">
+        
+    <div class="col-8 row justify-content-end">
+      	<input type="submit" value="Видалити" name="delete_all" class="btn btn-outline-secondary">
     </div>
-  </div>
+</div>
 
 <table class="table table-hover table-striped">
 	{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
@@ -95,7 +100,12 @@
 </form>
 <!--If there are no students in database - notification -->
 {% for student in students %}
-{% empty %}Студенти поки не внесені в базу даних
+{% empty %}
+{% if request.GET.search %}
+За вашим запитом нічого не знайдено
+{% else %}
+Студенти поки не внесені в базу даних
+{% endif %}
 <br>
 <br>
 {% endfor %}

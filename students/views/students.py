@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.views.generic import UpdateView, DeleteView, DetailView
 
 from ..models import Student, Group
@@ -23,6 +24,18 @@ def students_list(request):
         if request.GET.get('reverse', '') == '1':
             students = students.reverse()
 
+    # simple search
+    search = request.GET.get('search')
+    if search is not None:
+        students = Student.objects.search(query=search)
+        # view based seach:
+        # students = students.filter(
+        #     Q(last_name__icontains=search) |
+        #     Q(first_name__icontains=search) |
+        #     Q(middle_name__icontains=search) |
+        #     Q(notes__icontains=search) |
+        #     Q(ticket__iexact=search)).distinct()
+
     # paginate students
     paginator = Paginator(students, 3)
     page = request.GET.get('page')
@@ -37,8 +50,10 @@ def students_list(request):
     
     # multiply deleting of students
     if request.method == 'POST' and request.POST.get('delete_all'):
-        Student.objects.filter(id__in=request.POST.getlist('del')).delete()
-        messages.success(request, 'Обраних студентів було успішно видалено!')
+        studdel = Student.objects.filter(id__in=request.POST.getlist('del'))
+        if studdel.count() > 0:
+            studdel.delete()
+            messages.success(request, 'Обраних студентів було успішно видалено!')
         return redirect('home')
 
 

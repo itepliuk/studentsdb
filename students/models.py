@@ -1,5 +1,20 @@
 from django.db import models
+from django.db.models import Q
 from django.core.validators import MaxValueValidator
+
+# Create search student manager
+class StudentManager(models.Manager):
+    def search(self, query=None):
+        qs = self.get_queryset()
+        if query is not None:
+            or_lookup = (
+                Q(last_name__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(middle_name__icontains=query) |
+                Q(notes__icontains=query) |
+                Q(ticket__iexact=query))
+            qs = qs.filter(or_lookup).distinct()
+        return qs
 
 # Create your models here.
 class Student(models.Model):
@@ -73,6 +88,8 @@ class Student(models.Model):
         null=True,
         on_delete=models.PROTECT
         )
+
+    objects = StudentManager()
     
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
