@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.views.generic import UpdateView, DeleteView, DetailView
+from django.urls import reverse_lazy
 
 from ..models import Student, Group
 from ..forms import StudentUpdateForm
@@ -153,7 +154,7 @@ class StudentUpdateView(SuccessMessageMixin, UpdateView):
     model = Student
     template_name = 'students/students_edit.html'
     form_class = StudentUpdateForm
-    success_url = '/'
+    success_url = reverse_lazy('home')
     success_message = 'Студента успішно збережено!'
 
     def post(self, request, *args, **kwargs):
@@ -168,7 +169,7 @@ class StudentUpdateView(SuccessMessageMixin, UpdateView):
 class StudentDeleteView(SuccessMessageMixin, DeleteView):
     model = Student
     template_name = 'students/students_delete.html'
-    success_url = '/'
+    success_url = reverse_lazy('home')
     success_message = 'Студента успішно видалено!'
 
     def post(self, request, *args, **kwargs):

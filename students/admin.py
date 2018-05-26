@@ -1,4 +1,5 @@
 from django.contrib import admin, messages
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm, ValidationError
 from django.forms.models import BaseModelFormSet
@@ -40,7 +41,7 @@ class StudentBaseFormSet(BaseModelFormSet):
         
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['last_name', 'first_name', 'ticket', 'student_group']
+    list_display = ['photo_display', 'last_name', 'first_name', 'ticket', 'student_group']
     list_display_links = ['last_name', 'first_name']
     list_editable = ['student_group']
     ordering = ['last_name']
@@ -48,6 +49,7 @@ class StudentAdmin(admin.ModelAdmin):
     list_per_page =  10
     search_fields = ['last_name', 'first_name', 'middle_name', 'ticket', 'notes']
     actions = ['copy_students']
+    prepopulated_fields = {'slug': ('first_name', 'last_name')}
 
     form = StudentFormAdmin
 
@@ -64,6 +66,20 @@ class StudentAdmin(admin.ModelAdmin):
     def get_changelist_formset(self, request, **kwargs):
         kwargs['formset'] = StudentBaseFormSet
         return super().get_changelist_formset(request, **kwargs)
+
+    def photo_display(self, obj):
+        img_tag = '<img class="rounded-circle" height="30" width="30" src="{}">'       
+        if obj.photo: 
+            return img_tag.format(obj.photo.url)
+        else:
+            if obj.gender == obj.male:
+                return img_tag.format(settings.STATIC_URL + 'img/male.png')
+            else:
+                return img_tag.format(settings.STATIC_URL + 'img/female.png')
+
+
+    photo_display.short_description = 'Фото'
+    photo_display.allow_tags = True
 
 class GroupFormAdmin(ModelForm):
 
@@ -98,6 +114,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_filter = ['leader']
     list_per_page =  10
     search_fields = ['title', 'leader', 'notes']
+    prepopulated_fields = {'slug': ('title',)}
 
     form = GroupFormAdmin
 

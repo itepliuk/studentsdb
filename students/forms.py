@@ -47,8 +47,8 @@ class ContactForm(forms.Form):
 
 class StudentUpdateForm(forms.ModelForm):
     class Meta:
-        model = Student
-        fields = '__all__'
+        model = Student        
+        exclude = ('slug',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -69,7 +69,7 @@ class StudentUpdateForm(forms.ModelForm):
         # add buttons
         self.helper.layout.append(FormActions(
             Submit('add_button','Зберегти', css_class='btn btn-primary'),
-            Submit('cancel_button', 'Скасувати', css_class='btn btn-link'),
+            Submit('cancel_button', 'Скасувати', css_class='btn btn-link', formnovalidate='formnovalidate'),
             ))
     
     def clean_student_group(self):
@@ -93,7 +93,7 @@ class StudentUpdateForm(forms.ModelForm):
 class GroupAddForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = '__all__'
+        exclude = ('slug',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

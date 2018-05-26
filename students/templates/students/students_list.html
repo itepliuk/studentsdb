@@ -91,7 +91,8 @@
 				</div>
 				</div>
 			</td>
-			<td><input type="checkbox" name="del" value="{{ student.id }}"></td>
+			<!-- <td><input type="checkbox" name="del" value="{{ student.id }}"></td> -->
+			<td><label class="custom-check"><input type="checkbox" name="del" value="{{ student.id }}"><span class="checkmark"></span></label></td>
 		</tr>
 		{% endfor %}
 	</tbody>

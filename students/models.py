@@ -89,6 +89,11 @@ class Student(models.Model):
         on_delete=models.PROTECT
         )
 
+    slug = models.SlugField(
+        max_length=256,
+        unique=True,
+        )
+
     objects = StudentManager()
     
     def __str__(self):
@@ -120,6 +125,10 @@ class Group(models.Model):
         blank=True,
         )
 
+    slug = models.SlugField(
+        max_length=256,
+        unique=True,
+        )
 
     def __str__(self):
         if self.leader:
