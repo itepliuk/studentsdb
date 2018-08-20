@@ -70,7 +70,7 @@ class Student(models.Model):
 
     notes = models.TextField(
         "Додаткові нотатки",
-        blank=True, 
+        blank=True,
         null=True,
         )
 
@@ -95,7 +95,7 @@ class Student(models.Model):
         )
 
     objects = StudentManager()
-    
+
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
@@ -137,8 +137,9 @@ class Group(models.Model):
         else:
             return '{}'.format(self.title)
 
+
 class Exam(models.Model):
-    
+
     class Meta():
         verbose_name = 'Екзамен'
         verbose_name_plural = 'Екзамени'
@@ -155,7 +156,6 @@ class Exam(models.Model):
         max_length=256,
         blank=False,
         )
-
 
     exam_date = models.DateTimeField(
         "Дата іспиту",
@@ -183,6 +183,7 @@ class Exam(models.Model):
         else:
             return '{} {}'.format(self.title, self.teacher)
 
+
 class Rating(models.Model):
     """docstring for Rating"""
 
@@ -201,7 +202,7 @@ class Rating(models.Model):
         )
 
     mark = models.PositiveIntegerField(
-        'Оцінка', 
+        'Оцінка',
         default=0,
         validators=[MaxValueValidator(100, 'Оцінка не може бути більше 100 балів')]
         )
@@ -214,22 +215,21 @@ class Rating(models.Model):
     class Meta():
         verbose_name = 'Оцінка'
         verbose_name_plural = 'Оцінки'
-        
+
     def __str__(self):
         return '{} {}'.format(self.student, self.mark)
-    
+
     def ects(self):
-        if self.mark >= 90 and self.mark <=100:
+        if self.mark >= 90 and self.mark <= 100:
             return 'A'
-        elif self.mark >= 80 and self.mark <90:
+        elif self.mark >= 80 and self.mark < 90:
             return 'B'
-        elif self.mark >= 65 and self.mark <80:
+        elif self.mark >= 65 and self.mark < 80:
             return 'C'
-        elif self.mark >= 55 and self.mark <65:
             return 'D'
-        elif self.mark >= 50 and self.mark <55:
+        elif self.mark >= 50 and self.mark < 55:
             return 'E'
-        elif self.mark >= 1 and self.mark <50:
+        elif self.mark >= 1 and self.mark < 50:
             return 'F'
         else:
             return 'Оцінка ще не виставлена'

@@ -12,7 +12,7 @@ class StudentFormAdmin(ModelForm):
         # get group where current student is a leader
         groups = Group.objects.filter(leader=self.instance)
         if len(groups) > 0 and \
-            self.cleaned_data['student_group'] != groups[0]:
+                self.cleaned_data['student_group'] != groups[0]:
             raise ValidationError('Студент є старостою іншої групи', code='invalid')
         return self.cleaned_data['student_group']
 
@@ -23,22 +23,23 @@ class StudentFormAdmin(ModelForm):
                 raise ValidationError('Розмір зображення не може перевищувати 5 Мб')
         return self.cleaned_data['photo']
 
+
 class StudentBaseFormSet(BaseModelFormSet):
     # TO DO FIX IF NONE SELECTED STUDENTS IN FORMSET
 
     def clean(self):
         if any(self.errors):
             return
-        #print(self.cleaned_data)
+        # print(self.cleaned_data)
         for form in self.forms:
             student_group = form.cleaned_data.get('student_group')
             groups = Group.objects.filter(leader=form.instance)
-            if len(groups) > 0 and student_group != None and \
-                student_group != groups[0]:
+            if len(groups) > 0 and student_group is not None and \
+                    student_group != groups[0]:
                 form.add_error('student_group', 'Студент є старостою іншої групи')
                 raise ValidationError('Студент є старостою іншої групи', code='invalid')
         return self.cleaned_data
-        
+
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['photo_display', 'last_name', 'first_name', 'ticket', 'student_group']
@@ -46,7 +47,7 @@ class StudentAdmin(admin.ModelAdmin):
     list_editable = ['student_group']
     ordering = ['last_name']
     list_filter = ['student_group']
-    list_per_page =  10
+    list_per_page = 10
     search_fields = ['last_name', 'first_name', 'middle_name', 'ticket', 'notes']
     actions = ['copy_students']
     prepopulated_fields = {'slug': ('first_name', 'last_name')}
@@ -60,7 +61,7 @@ class StudentAdmin(admin.ModelAdmin):
         for obj in queryset:
             obj.id = None
             obj.save()
-        messages.success(request, 'Обраних студентів було успішно скопійовано') 
+        messages.success(request, 'Обраних студентів було успішно скопійовано')
     copy_students.short_description = 'Сopy selected students'
 
     def get_changelist_formset(self, request, **kwargs):
@@ -68,8 +69,8 @@ class StudentAdmin(admin.ModelAdmin):
         return super().get_changelist_formset(request, **kwargs)
 
     def photo_display(self, obj):
-        img_tag = '<img class="rounded-circle" height="30" width="30" src="{}">'       
-        if obj.photo: 
+        img_tag = '<img class="rounded-circle" height="30" width="30" src="{}">'
+        if obj.photo:
             return img_tag.format(obj.photo.url)
         else:
             if obj.gender == obj.male:
@@ -77,9 +78,9 @@ class StudentAdmin(admin.ModelAdmin):
             else:
                 return img_tag.format(settings.STATIC_URL + 'img/female.png')
 
-
     photo_display.short_description = 'Фото'
     photo_display.allow_tags = True
+
 
 class GroupFormAdmin(ModelForm):
 
@@ -87,23 +88,22 @@ class GroupFormAdmin(ModelForm):
         if self.cleaned_data['leader'] is not None:
             if self.cleaned_data['leader'].student_group != self.instance:
                 raise ValidationError('Вибраний староста не є студентом цієї групи', code='invalid')
-        return self.cleaned_data['leader']
+
 
 class GroupBaseFormSet(BaseModelFormSet):
     # TO DO FIX IF NONE SELECTED GROUPS IN FORMSET
     def clean(self):
         if any(self.errors):
             return
-        #print(self.cleaned_data)
+        # print(self.cleaned_data)
         for form in self.forms:
             if form.cleaned_data['leader'] is not None:
                 if form.cleaned_data['leader'].student_group != form.instance:
                     form.add_error('leader', 'Цей староста не є студентом цієї групи')
                     raise ValidationError(
                         'Вибраний староста не є студентом цієї групи', code='invalid')
-                
-        return self.cleaned_data           
-        
+        return self.cleaned_data
+
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
@@ -112,7 +112,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_editable = ['leader']
     ordering = ['title']
     list_filter = ['leader']
-    list_per_page =  10
+    list_per_page = 10
     search_fields = ['title', 'leader', 'notes']
     prepopulated_fields = {'slug': ('title',)}
 
@@ -124,7 +124,6 @@ class GroupAdmin(admin.ModelAdmin):
     def get_changelist_formset(self, request, **kwargs):
         kwargs['formset'] = GroupBaseFormSet
         return super().get_changelist_formset(request, **kwargs)
-
 
 
 # Register your models here.
