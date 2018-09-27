@@ -13,14 +13,15 @@ from django.urls import reverse_lazy
 from ..models import Student, Group
 from ..forms import StudentUpdateForm
 
+
 # Views for Students
 
 def students_list(request):
     students = Student.objects.all()
-    
+
     # try to order student list
     order_by = request.GET.get('order_by', '')
-    if order_by in ('id','last_name', 'first_name', 'ticket'):
+    if order_by in ('id', 'last_name', 'first_name', 'ticket'):
         students = students.order_by(order_by)
         if request.GET.get('reverse', '') == '1':
             students = students.reverse()
@@ -48,7 +49,7 @@ def students_list(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results
         students = paginator.page(paginator.num_pages)
-    
+
     # multiply deleting of students
     if request.method == 'POST' and request.POST.get('delete_all'):
         studdel = Student.objects.filter(id__in=request.POST.getlist('del'))
@@ -57,8 +58,8 @@ def students_list(request):
             messages.success(request, 'Обраних студентів було успішно видалено!')
         return redirect('home')
 
-
     return render(request, 'students/students_list.html', {'students': students})
+
 
 def students_add(request):
     # was form posted?
@@ -69,10 +70,10 @@ def students_add(request):
             # errors collection
             errors = {}
             # validate student data will go here
-            data = {'middle_name': request.POST.get('middle_name'),
-            'notes': request.POST.get('notes')}
+            data = {'middle_name': request.POST.get(
+                'middle_name'), 'notes': request.POST.get('notes')}
 
-            #validate user input
+            # validate user input
             first_name = request.POST.get('first_name', '').strip()
             if not first_name:
                 errors['first_name'] = "Ім'я є обов'язковим"
@@ -84,7 +85,7 @@ def students_add(request):
                 errors['last_name'] = "Прізвище є обов'язковим"
             else:
                 data['last_name'] = last_name
-                
+
             birthday = request.POST.get('birthday', '').strip()
             if not birthday:
                 errors['birthday'] = "Дата народження є обов'язковою"
@@ -113,7 +114,7 @@ def students_add(request):
                     data['student_group'] = groups[0]
 
             photo = request.FILES.get('photo')
-            
+
             if photo:
                 if imghdr.what(photo) not in ('jpg', 'jpeg', 'png'):
                     errors['photo'] = 'Фото повинно мати розширення: jpg, jpeg, png'
@@ -124,13 +125,14 @@ def students_add(request):
 
             # save student
             if not errors:
-                #create student object from data {}
+                # create student object from data {}
                 student = Student(**data)
                 # save it to database
-                student.save() 
+                student.save()
 
                 # alert message django
-                messages.success(request, 'Студента {} {} успішно додано!'.format(last_name, first_name))
+                messages.success(request, 'Студента {} {} успішно додано!'.format(
+                    last_name, first_name))
 
                 # redirect user to students list
                 return HttpResponseRedirect(reverse('home'))
@@ -145,7 +147,7 @@ def students_add(request):
             return HttpResponseRedirect(
                 '{}?status_message=Додавання студента скасовано!'.format(reverse('home')))
     else:
-        #initial form render
+        # initial form render
         return render(request, 'students/students_add.html',
                     {'groups': Group.objects.all().order_by('title')})
 
@@ -174,7 +176,7 @@ class StudentDeleteView(SuccessMessageMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            messages.success(request, 'Видалення студента відмінено!') 
+            messages.success(request, 'Видалення студента відмінено!')
             # import pdb; pdb.set_trace()
             return redirect('home')
         else:

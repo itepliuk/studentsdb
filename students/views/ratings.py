@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
+
 from ..models import Rating
+from ..forms import RatingAddForm
 
 def ratings_list(request):
     ratings = Rating.objects.all()
@@ -18,3 +21,42 @@ def ratings_list(request):
             ratings = ratings.reverse()
             
     return render(request, 'students/ratings_list.html', {'ratings': ratings})
+
+def ratings_add(request):
+    form = RatingAddForm(request.POST or None)
+    if request.method == 'POST':
+        if request.POST.get('add_button') is not None:          
+            if form.is_valid():
+                mark = form.cleaned_data['mark']
+                student = form.cleaned_data['student']
+                form.save()
+                messages.success(request, 'Оцінку {} студенту {} успішно додано!'.format(mark, student))
+                return redirect('ratings')
+            else:
+                return render(request, 'students/groups_add.html', {'form': form})
+        elif request.POST.get('cancel_button') is not None:
+            messages.success(request, 'Додавання оцінки відмінено!')
+            return redirect('ratings')
+    else:
+
+        return render(request, 'students/ratings_add.html', {'form' : form})
+
+def ratings_edit(request, pk=None):    
+    instance = get_object_or_404(Rating, id=pk)
+    form = RatingAddForm(request.POST or None, instance = instance)
+    if request.method == 'POST':
+        if request.POST.get('edit_button') is not None:          
+            if form.is_valid():
+                mark = form.cleaned_data['mark']
+                student = form.cleaned_data['student']
+                form.save()
+                messages.success(request, 'Оцінку студенту {} успішно оновлено на {}!'.format(student, mark))
+                return redirect('ratings')
+            else:
+                return render(request, 'students/ratings_add.html', {'form': form})
+        elif request.POST.get('cancel_button') is not None:
+            messages.success(request, 'Редагування оцінки відмінено!')
+            return redirect('ratings')
+    else:
+        #initial form render        
+        return render(request, 'students/ratings_add.html', {'form': form, 'instance': instance})

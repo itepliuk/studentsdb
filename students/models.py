@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.core.validators import MaxValueValidator
 
+
 # Create search student manager
 class StudentManager(models.Manager):
     def search(self, query=None):
@@ -15,6 +16,7 @@ class StudentManager(models.Manager):
                 Q(ticket__iexact=query))
             qs = qs.filter(or_lookup).distinct()
         return qs
+
 
 # Create your models here.
 class Student(models.Model):
@@ -219,6 +221,7 @@ class Rating(models.Model):
     def __str__(self):
         return '{} {}'.format(self.student, self.mark)
 
+    @property
     def ects(self):
         if self.mark >= 90 and self.mark <= 100:
             return 'A'

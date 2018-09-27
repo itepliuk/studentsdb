@@ -1,0 +1,11 @@
+{% extends 'students/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block meta_title %}Оцінки{% endblock %}
+{% block title %}Оцінки{% endblock %}
+
+{% block content %}
+{% crispy form %}
+{% endblock %}
+

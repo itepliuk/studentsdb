@@ -46,6 +46,8 @@ urlpatterns = [
 
      #Ratings urls
     url(r'^ratings/$', ratings.ratings_list, name='ratings'),
+    url(r'^ratings/add/$', ratings.ratings_add, name='ratings_add'),
+    url(r'^ratings/(?P<pk>\d+)/edit/$', ratings.ratings_edit, name='ratings_edit'),
 
     #Contact Admin Form
     #url(r'^contact-admin/$', contact_admin.contact_admin, name='contact_admin'),
