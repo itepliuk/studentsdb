@@ -96,12 +96,13 @@ class GroupAddForm(forms.ModelForm):
         exclude = ('slug',)
 
     def __init__(self, *args, **kwargs):
+        form_add = kwargs.pop('form_add')
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
 
         # set form tag attributes
-        self.helper.form_action = reverse('groups_add')
+        self.helper.form_action = reverse('groups_add') if form_add else reverse('groups_edit', kwargs={'pk': kwargs['instance'].id})
         self.helper.form_method = 'post'
         self.helper.form_class = 'form-horisontal'
 
@@ -130,12 +131,14 @@ class RatingAddForm(forms.ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
+        form_add = kwargs.pop('form_add')
         super().__init__(*args, **kwargs)
 
+        
         self.helper = FormHelper(self)
 
         # set form tag attributes
-        self.helper.form_action = reverse('ratings_add')
+        self.helper.form_action = reverse('ratings_add') if form_add else reverse('ratings_edit', kwargs={'pk': kwargs['instance'].id})
         self.helper.form_method = 'post'
         self.helper.form_class = 'form-horisontal'
 

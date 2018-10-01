@@ -37,7 +37,7 @@ def groups_detail(request, pk=None):
     return render(request, 'students/groups_detail.html', {'instance': instance})
 
 def groups_add(request):
-    form = GroupAddForm(request.POST or None)
+    form = GroupAddForm(request.POST or None, form_add=True)
     if request.method == 'POST':
         if request.POST.get('add_button') is not None:          
             if form.is_valid():
@@ -56,7 +56,7 @@ def groups_add(request):
 
 def groups_edit(request, pk=None):    
     instance = get_object_or_404(Group, id=pk)
-    form = GroupAddForm(request.POST or None, instance = instance)
+    form = GroupAddForm(request.POST or None, instance = instance, form_add=False)
     if request.method == 'POST':
         if request.POST.get('add_button') is not None:          
             if form.is_valid():

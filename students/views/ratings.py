@@ -23,7 +23,7 @@ def ratings_list(request):
     return render(request, 'students/ratings_list.html', {'ratings': ratings})
 
 def ratings_add(request):
-    form = RatingAddForm(request.POST or None)
+    form = RatingAddForm(request.POST or None, form_add=True)
     if request.method == 'POST':
         if request.POST.get('add_button') is not None:          
             if form.is_valid():
@@ -43,9 +43,9 @@ def ratings_add(request):
 
 def ratings_edit(request, pk=None):    
     instance = get_object_or_404(Rating, id=pk)
-    form = RatingAddForm(request.POST or None, instance = instance)
+    form = RatingAddForm(request.POST or None, instance = instance, form_add=False)
     if request.method == 'POST':
-        if request.POST.get('edit_button') is not None:          
+        if request.POST.get('add_button') is not None:          
             if form.is_valid():
                 mark = form.cleaned_data['mark']
                 student = form.cleaned_data['student']
