@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q
 from django.core.validators import MaxValueValidator
+from django.contrib.auth.models import User
 
 
 # Create search student manager
@@ -242,3 +243,76 @@ class Rating(models.Model):
             return True
         else:
             return False
+
+
+class Issue(models.Model):
+    """Issues are send to admin from cotact admin form"""
+
+    from_email = models.EmailField(
+        'Email адреса',
+        )
+
+    subject = models.CharField(
+        'Заголовок листа',
+        max_length=128,
+        )
+
+    message = models.TextField(
+        'Текст повідомлення',
+        max_length=2560,
+        )
+
+    created_date = models.DateTimeField(
+        'Дата створення заявки',
+        auto_now_add=True,
+        )
+
+    is_replied = models.BooleanField(
+        'Відправлено',
+        default=False,
+        )
+
+    class Meta():
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
+
+    def __str__(self):
+        return 'Заявка № {}'.format(self.id)
+
+
+class Answer(models.Model):
+    """Answers are send as a reply to Issues from admin """
+
+    user = models.ForeignKey(User,
+        null=True,
+        on_delete=models.SET_NULL,
+        )
+
+    subject = models.CharField(
+        'Заголовок листа',
+        max_length=128,
+        )
+
+    message = models.TextField(
+        'Текст повідомлення',
+        max_length=2560,
+        )
+
+    answer_date = models.DateTimeField(
+        'Дата відповіді',
+        auto_now_add=True,
+        )
+
+    issue = models.OneToOneField('Issue',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='answer',
+        )
+
+    class Meta():
+        verbose_name = 'Відповідь'
+        verbose_name_plural = 'Відповіді'
+
+    def __str__(self):
+        return 'Відповідь на заявку № {}'.format(self.issue.id)

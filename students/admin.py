@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm, ValidationError
 from django.forms.models import BaseModelFormSet
-from .models import Student, Group, Exam, Rating
+from .models import Student, Group, Exam, Rating, Issue, Answer
 
 
 class StudentFormAdmin(ModelForm):
@@ -126,8 +126,26 @@ class GroupAdmin(admin.ModelAdmin):
         return super().get_changelist_formset(request, **kwargs)
 
 
+class AnswerInline(admin.StackedInline):
+    model = Answer
+
+
+class IssueAdmin(admin.ModelAdmin):
+    list_display = ['from_email', 'subject', 'get_user', 'is_replied']
+    #readonly_fields = ['from_email', 'subject', 'message', 'get_user', 'is_replied']
+    inlines = [AnswerInline]
+    def get_user(self, obj):
+        return obj.answer.user if obj.answer.user else '-'
+
+    get_user.short_description = 'Відповідь надано'
+
+
+
+
 # Register your models here.
 admin.site.register(Student, StudentAdmin)
 
 admin.site.register(Exam)
 admin.site.register(Rating)
+
+admin.site.register(Issue, IssueAdmin)
