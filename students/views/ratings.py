@@ -60,3 +60,17 @@ def ratings_edit(request, pk=None):
     else:
         #initial form render        
         return render(request, 'students/ratings_add.html', {'form': form, 'instance': instance})
+
+def ratings_delete(request, pk=None):
+    instance = get_object_or_404(Rating, id=pk)
+    if request.method == 'POST':
+        if request.POST.get('delete_button') is not None:
+            instance.delete()
+            messages.success(request, 'Оцінку успішно видалено!')
+            return redirect('ratings')
+        elif request.POST.get('cancel_button'):
+            messages.success(request, 'Видалення оцінки відмінено!')
+            return redirect('ratings')
+    else:
+        #initial form render        
+        return render(request, 'students/ratings_delete.html', {'object': instance})
