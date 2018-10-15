@@ -44,10 +44,11 @@ urlpatterns = [
     url(r'^exams/$', exams.exams_list, name='exams'),
     url(r'^exams/add/$', exams.exams_add, name='exams_add'),
 
-     #Ratings urls
+    #Ratings urls
     url(r'^ratings/$', ratings.ratings_list, name='ratings'),
     url(r'^ratings/add/$', ratings.ratings_add, name='ratings_add'),
     url(r'^ratings/(?P<pk>\d+)/edit/$', ratings.ratings_edit, name='ratings_edit'),
+    url(r'^ratings/(?P<pk>\d+)/delete/$', ratings.ratings_delete, name='ratings_delete'),
 
     #Contact Admin Form
     #url(r'^contact-admin/$', contact_admin.contact_admin, name='contact_admin'),

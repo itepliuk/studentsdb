@@ -126,6 +126,7 @@ class GroupAdmin(admin.ModelAdmin):
         return super().get_changelist_formset(request, **kwargs)
 
 
+#Answers functionallity in admin part
 class AnswerInline(admin.StackedInline):
     model = Answer
 

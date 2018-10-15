@@ -5,23 +5,29 @@ from crispy_forms.bootstrap import FormActions
 from django import forms
 from django.core.urlresolvers import reverse
 
-from .models import Student, Group, Exam, Rating
+from .models import Student, Group, Exam, Rating, Issue
 
 
-class ContactForm(forms.Form):
+# class ContactForm(forms.Form):
 
-    from_email = forms.EmailField(
-        label='Ваша E-mail Адреса')
+#     from_email = forms.EmailField(
+#         label='Ваша E-mail Адреса')
 
-    subject = forms.CharField(
-        label='Заголовок листа',
-        max_length=128,
-        required=True)
+#     subject = forms.CharField(
+#         label='Заголовок листа',
+#         max_length=128,
+#         required=True)
 
-    message = forms.CharField(
-        label='Текст повідомлення',
-        max_length=2560,
-        widget=forms.Textarea)
+#     message = forms.CharField(
+#         label='Текст повідомлення',
+#         max_length=2560,
+#         widget=forms.Textarea)
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Issue
+        fields = ('from_email', 'subject', 'message') 
 
     def __init__(self, *args, **kwargs):
         # call original initializator
