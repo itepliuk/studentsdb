@@ -283,7 +283,8 @@ class Issue(models.Model):
 class Answer(models.Model):
     """Answers are send as a reply to Issues from admin """
 
-    user = models.ForeignKey(User,
+    user = models.ForeignKey(
+        User,
         null=True,
         on_delete=models.SET_NULL,
         )
@@ -303,7 +304,8 @@ class Answer(models.Model):
         auto_now_add=True,
         )
 
-    issue = models.OneToOneField('Issue',
+    issue = models.OneToOneField(
+        'Issue',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
@@ -316,3 +318,24 @@ class Answer(models.Model):
 
     def __str__(self):
         return 'Відповідь на заявку № {}'.format(self.issue.id)
+
+
+class MonthJournal(models.Model):
+    """Students Monthly Journal"""
+
+    student = models.ForeignKey('Student', verbose_name='Студент', blank=False, unique_for_month='date')
+    # we only need yaer and month, so always set day to
+    # first day of the month
+    date = models.DateField(verbose_name='Дата', blank=False)
+    
+    for day in range(1, 32):
+        locals()['present_day%d' % day] = models.BooleanField(default=False)
+
+
+    class Meta:
+        verbose_name = 'Місячний Журнал'
+        verbose_name_plural = 'Місячні Журнали'
+
+    def __str__(self):
+        return '{}: {}, {}'.format(self.student.last_name, self.date.month, self.date.year)
+
