@@ -50,6 +50,9 @@ urlpatterns = [
     url(r'^ratings/(?P<pk>\d+)/edit/$', ratings.ratings_edit, name='ratings_edit'),
     url(r'^ratings/(?P<pk>\d+)/delete/$', ratings.ratings_delete, name='ratings_delete'),
 
+    #Journal urls
+    url(r'^journal/$', journal.JournalView.as_view(), name='journal'),
+
     #Contact Admin Form
     #url(r'^contact-admin/$', contact_admin.contact_admin, name='contact_admin'),
     url(r'^contact-admin/$', contact_admin.ContactView.as_view(), name='contact_admin'),
