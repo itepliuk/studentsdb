@@ -100,3 +100,11 @@ input {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+/* Journal Table Styles */
+td.day-box,
+th.day-header {
+    padding: 4px !important;
+    vertical-align: middle !important;
+    text-align: center;
+}
