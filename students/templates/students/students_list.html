@@ -85,7 +85,7 @@
 				    Дія
 					</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="/journal/{{ student.id}}">Відвідування</a>
+					<a class="dropdown-item" href="{% url 'journal' student.id %}">Відвідування</a>
 				    <a class="dropdown-item" href="{% url 'students_edit' student.id %}">Редагувати</a>
 				    <a class="dropdown-item" href="{% url 'students_delete' student.id %}">Видалити</a>
 				</div>

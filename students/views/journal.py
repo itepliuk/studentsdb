@@ -23,10 +23,7 @@ class JournalView(TemplateView):
             # otherwise just displaying current month data
             today = datetime.today()
             month = date(today.year, today.month, 1)
-        # перевіряємо чи передали нам місяць в параметрі,
-        # якщо ні - вичисляємо поточний;
-        # поки що ми віддаємо лише поточний
-        print('test')
+        
         # calculate current, previous and next month details;
         # we need this for month navigation element in template
         next_month = month + relativedelta(months=1)
@@ -39,11 +36,6 @@ class JournalView(TemplateView):
         # we’ll use this variable in students pagination
         context['cur_month'] = month.strftime('%Y-%m-%d')
         
-        # змінну cur_month ми використовуватимемо пізніше в пагінації; а month_verbose в навігації помісячній:
-           
-
-        # тут будемо обчислювати список днів у місяці,
-        # а поки заб’ємо статично:
         #context['month_header'] = [
         #    {'day': 1, 'verbose': 'Пн'},
         #    {'day': 2, 'verbose': 'Вт'},
@@ -59,17 +51,14 @@ class JournalView(TemplateView):
 
 
         # get all students from database
-        queryset = Student.objects.order_by('last_name')
+        if kwargs.get('pk'):
+            queryset = [Student.objects.get(pk=kwargs['pk'])]
+        else:
+            queryset = Student.objects.order_by('last_name')
 
-        # це адреса для посту AJAX запиту, як бачите, ми
-        # робитимемо його на цю ж в’юшку; в’юшка журналу
-        # буде і показувати журнал і обслуговувати запити
-        # типу пост на оновлення журналу;
         # url to update student presence, for form post
         update_url = reverse('journal')
 
-        # пробігаємось по усіх студентах і збираємо
-        # необхідні дані:
         # go over all students and collect data about presence
         # during selected month
         students = []
