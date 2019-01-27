@@ -33,8 +33,8 @@
 				<strong>Група:</strong>
 				<select>
 					<option value="">Виберіть групу</option>
-					{% for group in groups %}
-					<option value="{{ group.id }}">{{group.title}}</option>
+					{% for group in GROUPS %}
+					<option value="{{ group.id }}"{% if group.selected %}selected='1'{% endif %}>{{group.title}}{% if group.leader %}, {{group.leader }}{% endif %}</option>
 					{% endfor %}
 				</select>
 			</div>
