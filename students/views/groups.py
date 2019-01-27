@@ -5,12 +5,19 @@ from django.contrib import messages
 
 from ..models import Group
 from ..forms import GroupAddForm
+from ..util import paginate, get_current_group
 
 # Views for Groups
 
 def groups_list(request):
-    groups = Group.objects.all()
-    
+    #groups = Group.objects.all()
+    current_group = get_current_group(request)
+    if current_group:
+        groups = Group.objects.filter(id=current_group.id)
+    else:
+        # otherwise show all groups
+        groups = Group.objects.all()
+
     # try to order groups list
     order_by = request.GET.get('order_by', '')
     if order_by in ('id','title', 'leader'):

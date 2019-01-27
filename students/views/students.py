@@ -12,12 +12,18 @@ from django.urls import reverse_lazy
 
 from ..models import Student, Group
 from ..forms import StudentUpdateForm
-
+from ..util import paginate, get_current_group
 
 # Views for Students
 
 def students_list(request):
-    students = Student.objects.all()
+    # check if we need to show only one group of students
+    current_group = get_current_group(request)
+    if current_group:
+        students = Student.objects.filter(student_group=current_group)
+    else:
+        # otherwise show all students
+        students = Student.objects.all()
 
     # try to order student list
     order_by = request.GET.get('order_by', '')
@@ -39,7 +45,7 @@ def students_list(request):
         #     Q(ticket__iexact=search)).distinct()
 
     # paginate students
-    paginator = Paginator(students, 3)
+    paginator = Paginator(students, 5)
     page = request.GET.get('page')
     try:
         students = paginator.page(page)
