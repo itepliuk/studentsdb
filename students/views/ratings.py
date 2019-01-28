@@ -8,8 +8,8 @@ from ..forms import RatingAddForm
 
 def ratings_list(request):
     ratings = Rating.objects.all()
-    # try to order exams list
     
+    # try to order exams list
     order_by = request.GET.get('order_by', '')
     if order_by in ('id','student', 'exam_rating', 'mark'):
         ratings = ratings.order_by(order_by)

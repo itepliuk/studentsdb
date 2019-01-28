@@ -1,10 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from ..models import Exam, Group
+from ..util import get_current_group
 
 def exams_list(request):
-	exams = Exam.objects.all()
+	current_group = get_current_group(request)
+	if current_group:
+		exams = Exam.objects.filter(exam_group=current_group)
+	else:
+		exams = Exam.objects.all()
+	
 	# try to order exams list
 	order_by = request.GET.get('order_by', '')
 	if order_by in ('id','title', 'exam_date'):

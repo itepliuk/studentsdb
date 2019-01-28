@@ -9,6 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.views.generic import UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 
 from ..models import Student, Group
 from ..forms import StudentUpdateForm
@@ -132,6 +133,8 @@ def students_add(request):
             # save student
             if not errors:
                 # create student object from data {}
+                #data.update(slug= '-'.join([data['first_name'], data['last_name']]).lower().replace(' ', ''))
+                data['slug'] = slugify(data['first_name'] + '-' + data['last_name'])
                 student = Student(**data)
                 # save it to database
                 student.save()
