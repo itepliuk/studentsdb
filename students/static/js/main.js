@@ -48,7 +48,15 @@ function initGroupSelector() {
     });
 }
 
+function initDateFields() {
+    $('input.dateinput').datetimepicker({
+        'format': 'YYYY-MM-DD'
+    });
+}
+
+
 $(document).ready(function(){
      initJournal();
      initGroupSelector();
+     initDateFields();
 });
