@@ -76,8 +76,8 @@
 					{% endif %}
 				{% endif %}
 			</td>
-			<td><a title="Редагувати" href="{% url 'students_edit' student.id %}">{{ student.last_name }}</a></td>
-			<td><a title="Редагувати" href="{% url 'students_edit' student.id %}">{{ student.first_name }}</a></td>
+			<td><a title="Редагувати" href="{% url 'students_edit' student.id %}" class="student-edit-form-link">{{ student.last_name }}</a></td>
+			<td><a title="Редагувати" href="{% url 'students_edit' student.id %}" class="student-edit-form-link">{{ student.first_name }}</a></td>
 			<td>{{ student.ticket }}</td>
 			<td>
 				<div class="dropdown">
@@ -86,7 +86,7 @@
 					</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a class="dropdown-item" href="{% url 'journal' student.id %}">Відвідування</a>
-				    <a class="dropdown-item" href="{% url 'students_edit' student.id %}">Редагувати</a>
+				    <a class="dropdown-item student-edit-form-link" href="{% url 'students_edit' student.id %}">Редагувати</a>
 				    <a class="dropdown-item" href="{% url 'students_delete' student.id %}">Видалити</a>
 				</div>
 				</div>
