@@ -70,12 +70,15 @@ function initEditStudentPage() {
 
                 // update modal window with arrived content from server
                 var modal = $('#myModal'), html = $(data), 
-                    form = html.find('#content-column form');
+                    form = html.find('#content-column form.form-horisontal');
                 modal.find('.modal-title').html(html.find('#content-column h2').text());
                 modal.find('.modal-body').html(form);
 
+                // init our edit form
+                initEditStudentForm(form, modal);
+
                 // set and show modal window finally
-                modal.modal('show');
+                modal.modal('show');                
 
             },
             'error': function(){
@@ -86,6 +89,46 @@ function initEditStudentPage() {
         return false;
     });
 }
+
+function initEditStudentForm(form, modal) {
+    // attach datepicker
+    initDateFields();
+
+    // close modal window on Cancel button click
+    form.find('input[name="cancel_button"]').click(function(event){
+        modal.modal('hide');
+        return false;
+    });
+
+    // make form work in AJAX mode
+    form.ajaxForm({
+        'dataType': 'html',
+        'error': function(){
+            alert('An error has occurred on the server. Please, try again later.');
+            return false;
+        },
+        'success': function(data, status, xhr) {
+            var html = $(data), newform = html.find('#content-column form.form-horisontal');
+
+            // copy alert to modal window
+            modal.find('.modal-body').html(html.find('.alert'));
+
+            // copy form to modal if we found it in server response
+            if (newform.length > 0) {
+                modal.find('.modal-body').append(newform);
+
+                // initialize form fields and buttons
+                initEditStudentForm(newform, modal);
+            } else {
+                // if no form, it means success and we need to reload page
+                // to get updated students list;
+                // reload after 2 seconds, so that user can read success message
+                setTimeout(function(){location.reload(true);}, 500);
+            }
+        }
+    });
+}
+
 
 $(document).ready(function(){
      initJournal();
