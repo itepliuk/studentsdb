@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.contrib.messages.views import SuccessMessageMixin
+import logging
 
 from studentsdb.settings import ADMIN_EMAIL
 from ..forms import ContactForm
@@ -47,10 +48,13 @@ class ContactView(SuccessMessageMixin, FormView):
         from_email = form.cleaned_data['from_email']
         form.save()
 
+        logger = logging.getLogger(__name__)
         try:
             send_mail(subject, message, from_email, [ADMIN_EMAIL])
         except Exception as e:
             messages.error(self.request, 'При відправці листа виникла помилка {}'.format(e))
+            logger.exception('При відправці листа виникла помилка {}'.format(e))
         else:
             self.success_message = 'Повідомлення успішно надіслане!'
+            logger.info('Повідомлення відправлено! {}'.format(subject))
         return super().form_valid(form)

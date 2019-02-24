@@ -123,11 +123,12 @@ class GroupAddForm(forms.ModelForm):
             Submit('add_button','Зберегти', css_class='btn btn-primary'),
             Submit('cancel_button', 'Скасувати', css_class='btn btn-link', formnovalidate='formnovalidate'),
             ))
-
+        
     def clean_leader(self):
         if self.cleaned_data['leader'] and self.cleaned_data['leader'].student_group != self.instance:
             raise forms.ValidationError('Вибраний староста не є студентом цієї групи', code='invalid')
         return self.cleaned_data['leader']
+
 
 # Form for ratings add page
 

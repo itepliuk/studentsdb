@@ -1,7 +1,12 @@
 from django.db import models
 from django.db.models import Q
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+
+
 
 
 # Create search student manager
@@ -339,3 +344,13 @@ class MonthJournal(models.Model):
     def __str__(self):
         return '{}: {}, {}'.format(self.student.last_name, self.date.month, self.date.year)
 
+
+# Signals
+# -----------------------------------------------------------------------------
+@receiver(pre_save, sender=Group)
+def pre_save_group_slug(sender, **kwargs):
+    instance = kwargs.get('instance')
+    if instance:
+        group = Group.objects.filter(pk=instance.id).first()
+        if not instance.slug or group and instance.title != group.title:
+            instance.slug = slugify(instance.title)
